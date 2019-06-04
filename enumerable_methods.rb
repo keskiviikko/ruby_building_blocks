@@ -58,6 +58,26 @@ module Enumerable
         self.length
     end
 
+    def my_map(code = nil)
+        arr = []
+        return self unless code or block_given?
+        for item in self do
+          if block_given?
+            arr << yield(item)
+          else
+            arr << code.call(item)
+          end
+        end
+        arr
+    end
+    
+    def my_inject
+        accumulator = self[0]
+        for item in self[1..self.length] do
+            accumulator = yield(accumulator,item)
+        end
+        accumulator
+    end
 end
 
 [1,2,3,4,5].my_each do |i|
